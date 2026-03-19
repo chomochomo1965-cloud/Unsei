@@ -154,17 +154,17 @@ let cumulativeTotal = localStorage.getItem("totalPoint")
 document.getElementById("cumulative").textContent = "累計point：" + cumulativeTotal;
 
 const fortune = {
-  2: "💀 大凶 😱😱😱😱😱 <span class='small'>今日は布団から出ない方が安全かも…</span>",
-  3: "⚠️ 末凶 😅😅😅😐😐 <span class='small'>靴下が片方なくなる予感</span>",
-  4: "🔹 小吉 🙂🙂🙂😐😐 <span class='small'>自販機でちょっと迷う日</span>",
-  5: "🔹 小吉 😄😄😄😐😐 <span class='small'>普通すぎて逆にレアな日</span>",
-  6: "🌼 中吉 😄😄😄😄😐 <span class='small'>コンビニでいいもの見つかるかも</span>",
-  7: "🌼 中吉 😃😃😃😃😃 <span class='small'>ちょっとしたラッキーあり！</span>",
-  8: "✨ 中吉 😃😃😃😃😃 <span class='small'>誰かに優しくするといいことあるよ</span>",
-  9: "⭐ 大吉 🤩🤩🤩🤩🤩 <span class='small'>なぜかタイミングが神がかる日</span>",
-  10:"⭐ 大吉 🤩🤩🤩🤩🤩 <span class='small'>今日のあなた、ちょっと無敵です</span>",
-  11:"🔥 超大吉 🔥🔥🔥🔥 <span class='small'>やること全部うまくいく説ある</span>",
-  12:"👑 神吉 👑👑👑👑👑 <span class='small'>完全に主役の日！好きに生きてOK</span>"
+  2: "😱😱😱😱😱 <span class='small'>💀 大凶：今日は布団から出ない方が安全かも…</span>",
+  3: "😅😅😅😐😐 <span class='small'>⚠️ 末凶：靴下が片方なくなる予感</span>",
+  4: "🙂🙂🙂😐😐 <span class='small'>🔹 小吉：自販機でちょっと迷う日</span>",
+  5: "😄😄😄😐😐 <span class='small'>🔹 小吉：普通すぎて逆にレアな日</span>",
+  6: "😄😄😄😄😐 <span class='small'>🌼 中吉：コンビニでいいもの見つかるかも</span>",
+  7: "😃😃😃😃😃 <span class='small'>🌼 中吉：ちょっとしたラッキーあり！</span>",
+  8: "😃😃😃😃😃 <span class='small'>✨ 中吉：誰かに優しくするといいことあるよ</span>",
+  9: "🤩🤩🤩🤩🤩 <span class='small'>⭐ 大吉：なぜかタイミングが神がかる日</span>",
+  10:"🤩🤩🤩🤩🤩 <span class='small'>⭐ 大吉：今日のあなた、ちょっと無敵です</span>",
+  11:"🔥🔥🔥🔥🔥 <span class='small'>🔥 超大吉：やること全部うまくいく説ある</span>",
+  12:"👑👑👑👑👑 <span class='small'>👑 神吉：完全に主役の日！好きに生きてOK</span>"
 };
 function roll(){
   let d1 = Math.floor(Math.random()*6)+1;
