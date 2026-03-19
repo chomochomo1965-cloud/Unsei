@@ -172,19 +172,84 @@ document.getElementById("cumulative").textContent =
   "累計point：" + cumulativeTotal;
 
 const fortune = {
-  2: "😱😱😱😱😱\n<span class='small'>今日は布団から出ない方が安全かも…</span>",
-  3: "😅😅😅😐😐\n<span class='small'>靴下が片方なくなる予感</span>",
-  4: "🙂🙂🙂😐😐\n<span class='small'>自販機でちょっと迷う日</span>",
-  5: "😄😄😄😐😐\n<span class='small'>普通すぎて逆にレアな日</span>",
-  6: "😄😄😄😄😐\n<span class='small'>コンビニでいいもの見つかるかも</span>",
-  7: "😃😃😃😃😃\n<span class='small'>ちょっとしたラッキーあり！</span>",
-  8: "😃😃😃😃😃\n<span class='small'>誰かに優しくするといいことあるよ</span>",
-  9: "🤩🤩🤩🤩🤩\n<span class='small'>なぜかタイミングが神がかる日</span>",
-  10:"🤩🤩🤩🤩🤩\n<span class='small'>今日のあなた、ちょっと無敵です</span>",
-  11:"🔥🔥🔥🔥🔥\n<span class='small'>やること全部うまくいく説ある</span>",
-  12:"👑👑👑👑👑👑\n<span class='small'>完全に主役の日！好きに生きてOK</span>"
-};
-function roll(){
+  2: [
+    "😱😱😱😱😱\n<span class='small'>今日は布団から出ない方が安全かも…</span>",
+    "💀💀💀💀💀\n<span class='small'>Wi-Fiがやたら遅い日</span>",
+    "😵😵😵😵😵\n<span class='small'>何か忘れてる気がする日</span>",
+    "🌀🌀🌀🌀🌀\n<span class='small'>なぜか全部かみ合わない…</span>",
+    "🥶🥶🥶🥶🥶\n<span class='small'>冷蔵庫より寒い気分の日</span>"
+  ],
+  3: [
+    "😅😅😅😐😐\n<span class='small'>靴下が片方なくなる予感</span>",
+    "😐😐😐😐😐\n<span class='small'>信号によく止まる日</span>",
+    "🙄🙄🙄🙄🙄\n<span class='small'>ちょっとしたミス多発</span>",
+    "😑😑😑😑😑\n<span class='small'>微妙にタイミングがズレる</span>",
+    "🤔🤔🤔🤔🤔\n<span class='small'>なんかモヤっとする日</span>"
+  ],
+  4: [
+    "🙂🙂🙂😐😐\n<span class='small'>自販機でちょっと迷う日</span>",
+    "🙂🙂🙂🙂😐\n<span class='small'>小さな発見があるかも</span>",
+    "😊😊😊😐😐\n<span class='small'>まあまあ平和な日</span>",
+    "😌😌😌😐😐\n<span class='small'>落ち着いて過ごせる</span>",
+    "🙂🙂🙂🙂🙂\n<span class='small'>ちょい良い感じ</span>"
+  ],
+  5: [
+    "😄😄😄😐😐\n<span class='small'>普通すぎて逆にレアな日</span>",
+    "😄😄😄😄😐\n<span class='small'>のんびりできる日</span>",
+    "😊😊😊😊😐\n<span class='small'>ちょっと嬉しいことあり</span>",
+    "😆😆😆😐😐\n<span class='small'>軽くテンション上がる</span>",
+    "🙂🙂🙂🙂🙂\n<span class='small'>安定の一日</span>"
+  ],
+  6: [
+    "😄😄😄😄😐\n<span class='small'>コンビニでいいもの見つかる</span>",
+    "😋😋😋😋😐\n<span class='small'>ごはんが美味しい日</span>",
+    "😎😎😎😐😐\n<span class='small'>ちょっと調子いい</span>",
+    "😊😊😊😊😊\n<span class='small'>気分が軽い日</span>",
+    "😄😄😄😄😄\n<span class='small'>いい感じに進む</span>"
+  ],
+  7: [
+    "😃😃😃😃😃\n<span class='small'>ちょっとしたラッキーあり！</span>",
+    "✨✨✨✨✨\n<span class='small'>ツイてる瞬間あり</span>",
+    "😆😆😆😆😆\n<span class='small'>楽しいことあるよ</span>",
+    "😎😎😎😎😎\n<span class='small'>流れがいい日</span>",
+    "🎉🎉🎉🎉🎉\n<span class='small'>小当たり連発</span>"
+  ],
+  8: [
+    "😃😃😃😃😃\n<span class='small'>誰かに優しくすると吉</span>",
+    "😊😊😊😊😊\n<span class='small'>いい出会いありそう</span>",
+    "✨✨✨✨✨\n<span class='small'>タイミングがいい日</span>",
+    "😆😆😆😆😆\n<span class='small'>楽しい流れ</span>",
+    "🎯🎯🎯🎯🎯\n<span class='small'>狙い通りいくかも</span>"
+  ],
+  9: [
+    "🤩🤩🤩🤩🤩\n<span class='small'>タイミング神がかり</span>",
+    "🔥🔥🔥🔥🔥\n<span class='small'>勢いが止まらない</span>",
+    "✨✨✨✨✨\n<span class='small'>いい流れ来てる</span>",
+    "😎😎😎😎😎\n<span class='small'>自信もってOK</span>",
+    "🎉🎉🎉🎉🎉\n<span class='small'>楽しいこと続く</span>"
+  ],
+  10:[
+    "🤩🤩🤩🤩🤩\n<span class='small'>今日は無敵モード</span>",
+    "🔥🔥🔥🔥🔥\n<span class='small'>やること全部当たる</span>",
+    "✨✨✨✨✨\n<span class='small'>成功率高い日</span>",
+    "😎😎😎😎😎\n<span class='small'>自分信じてOK</span>",
+    "🎯🎯🎯🎯🎯\n<span class='small'>狙い通り決まる</span>"
+  ],
+  11:[
+    "🔥🔥🔥🔥🔥\n<span class='small'>やること全部うまくいく説</span>",
+    "👑👑👑👑👑\n<span class='small'>完全に主役の日</span>",
+    "✨✨✨✨✨\n<span class='small'>最強クラスの運勢</span>",
+    "🎉🎉🎉🎉🎉\n<span class='small'>最高に楽しい日</span>",
+    "😎😎😎😎😎\n<span class='small'>自信MAXでOK</span>"
+  ],
+  12:[
+    "👑👑👑👑👑👑\n<span class='small'>ミラクル発動！！</span>",
+    "🌈🌈🌈🌈🌈\n<span class='small'>奇跡レベルの運勢</span>",
+    "🔥🔥🔥🔥🔥🔥\n<span class='small'>最強すぎる日</span>",
+    "🎊🎊🎊🎊🎊\n<span class='small'>伝説級の一日</span>",
+    "✨✨✨✨✨✨\n<span class='small'>全部うまくいく日</span>"
+  ]
+};function roll(){
 
   let d1 = Math.floor(Math.random()*6)+1;
   let d2 = Math.floor(Math.random()*6)+1;
