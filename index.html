@@ -120,10 +120,6 @@ button{
 
 <script>
 
-// サイコロコピー
-document.getElementById("dice2").innerHTML =
-  document.getElementById("dice1").innerHTML;
-
 // 累計
 let cumulativeTotal = localStorage.getItem("total")
   ? parseInt(localStorage.getItem("total"))
@@ -132,7 +128,7 @@ let cumulativeTotal = localStorage.getItem("total")
 document.getElementById("cumulative").textContent =
   "累計point：" + cumulativeTotal;
 
-// あなたのfortuneそのまま
+// ★ fortune（あなたのそのまま）
 const fortune = {
   2:["😱😱😱😱😱\n<span class='small'>今日は布団から出ない方が安全かも…</span>","💀💀💀💀💀\n<span class='small'>Wi-Fiがやたら遅い日</span>","😵😵😵😵😵\n<span class='small'>何か忘れてる気がする日</span>","🌀🌀🌀🌀🌀\n<span class='small'>なぜか全部かみ合わない…</span>","🥶🥶🥶🥶🥶\n<span class='small'>冷蔵庫より寒い気分の日</span>"],
   3:["😅😅😅😐😐\n<span class='small'>靴下が片方なくなる予感</span>","😐😐😐😐😐\n<span class='small'>信号によく止まる日</span>","🙄🙄🙄🙄🙄\n<span class='small'>ちょっとしたミス多発</span>","😑😑😑😑😑\n<span class='small'>微妙にタイミングがズレる</span>","🤔🤔🤔🤔🤔\n<span class='small'>なんかモヤっとする日</span>"],
@@ -157,9 +153,9 @@ function roll(){
   cumulativeTotal += total;
   localStorage.setItem("total", cumulativeTotal);
 
-  // ★ここが修正ポイント
+  // ★★★★★ ここが最重要（ランダム1つ）
   let list = fortune[total];
-  let randomFortune = list[Math.floor(Math.random()*list.length)];
+  let randomFortune = list[Math.floor(Math.random() * list.length)];
 
   document.getElementById("result").innerHTML =
     "今回の結果：" + total + "<br>" +
