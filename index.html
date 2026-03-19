@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>🎲 今日の運勢 🎲</title>
+
 <style>
 body{
   text-align:center;
@@ -12,10 +13,12 @@ body{
   margin:0;
   padding-bottom:160px;
 }
+
 h1{
   font-size:32px;
   margin-top:30px;
 }
+
 .scene{
   display:flex;
   justify-content:center;
@@ -23,6 +26,7 @@ h1{
   margin:50px;
   perspective:800px;
 }
+
 .dice{
   width:120px;
   height:120px;
@@ -30,6 +34,7 @@ h1{
   transform-style:preserve-3d;
   transition:transform 1s;
 }
+
 .face{
   position:absolute;
   width:120px;
@@ -40,6 +45,7 @@ h1{
   grid-template-columns:repeat(3,1fr);
   grid-template-rows:repeat(3,1fr);
 }
+
 .dot{
   width:24px;
   height:24px;
@@ -47,14 +53,14 @@ h1{
   border-radius:50%;
   margin:auto;
 }
-.red{
-  background:red;
-}
-.front  { transform:rotateY(0deg) translateZ(60px); }
-.back   { transform:rotateY(180deg) translateZ(60px) rotateY(180deg); }
-.right  { transform:rotateY(90deg) translateZ(60px); }
-.left   { transform:rotateY(-90deg) translateZ(60px); }
-.top    { transform:rotateX(-90deg) translateZ(60px); }
+
+.red{ background:red; }
+
+.front { transform:rotateY(0deg) translateZ(60px); }
+.back { transform:rotateY(180deg) translateZ(60px) rotateY(180deg); }
+.right { transform:rotateY(90deg) translateZ(60px); }
+.left { transform:rotateY(-90deg) translateZ(60px); }
+.top { transform:rotateX(-90deg) translateZ(60px); }
 .bottom { transform:rotateX(90deg) translateZ(60px) rotateY(180deg); }
 
 button{
@@ -67,6 +73,7 @@ button{
   white-space: nowrap;
   margin:0;
 }
+
 #result{
   font-size:26px;
   margin-top:20px;
@@ -74,6 +81,7 @@ button{
   white-space: pre-line;
   line-height:1.4;
 }
+
 #result .small{
   font-size:80%;
 }
@@ -94,6 +102,7 @@ button{
   align-items:center;
   gap:10px;
 }
+
 #cumulative{
   font-size:24px;
   font-weight:bold;
@@ -102,6 +111,7 @@ button{
   border-radius:12px;
   background:#fff;
 }
+
 .container-buttons {
   position: fixed;
   bottom: 20px;
@@ -113,12 +123,14 @@ button{
 }
 </style>
 </head>
+
 <body>
 
 <h1>🎲 今日の運勢 🎲</h1>
 
 <div>
   <div class="scene">
+
     <div class="dice" id="dice1">
       <div class="face front"><div></div><div></div><div></div><div></div><div class="dot red"></div><div></div><div></div><div></div><div></div></div>
       <div class="face back"><div class="dot"></div><div></div><div class="dot"></div><div class="dot"></div><div></div><div class="dot"></div><div class="dot"></div><div></div><div class="dot"></div></div>
@@ -127,7 +139,9 @@ button{
       <div class="face top"><div class="dot"></div><div></div><div class="dot"></div><div></div><div class="dot red"></div><div></div><div class="dot"></div><div></div><div class="dot"></div></div>
       <div class="face bottom"><div></div><div></div><div class="dot"></div><div></div><div></div><div></div><div class="dot"></div><div></div><div></div></div>
     </div>
+
     <div class="dice" id="dice2"></div>
+
   </div>
 
   <div id="result"></div>
@@ -143,15 +157,19 @@ button{
 </div>
 
 <script>
-document.getElementById("dice2").innerHTML = document.getElementById("dice1").innerHTML;
 
-// ★ 保存された値を読み込み
-let cumulativeTotal = localStorage.getItem("totalPoint")
-  ? parseInt(localStorage.getItem("totalPoint"))
+// サイコロ2コピー
+document.getElementById("dice2").innerHTML =
+  document.getElementById("dice1").innerHTML;
+
+// 🔥 localStorageから読み込み
+let cumulativeTotal = localStorage.getItem("total")
+  ? parseInt(localStorage.getItem("total"))
   : 0;
 
-// ★ 画面に反映
-document.getElementById("cumulative").textContent = "累計point：" + cumulativeTotal;
+// 初期表示
+document.getElementById("cumulative").textContent =
+  "累計point：" + cumulativeTotal;
 
 const fortune = {
   2: "😱😱😱😱😱\n<span class='small'>今日は布団から出ない方が安全かも…</span>",
@@ -167,6 +185,7 @@ const fortune = {
   12:"👑👑👑👑👑👑\n<span class='small'>完全に主役の日！好きに生きてOK</span>"
 };
 function roll(){
+
   let d1 = Math.floor(Math.random()*6)+1;
   let d2 = Math.floor(Math.random()*6)+1;
 
@@ -187,8 +206,12 @@ function roll(){
 
   dice1.style.transition = "transform " + (baseTime/1000) + "s";
   dice2.style.transition = "transform " + (dice2Time/1000) + "s";
-  dice1.style.transform = "rotateX("+(540+Math.random()*540)+"deg) rotateY("+(540+Math.random()*540)+"deg)";
-  dice2.style.transform = "rotateX("+(540+Math.random()*540)+"deg) rotateY("+(540+Math.random()*540)+"deg)";
+
+  dice1.style.transform =
+    "rotateX("+(540+Math.random()*540)+"deg) rotateY("+(540+Math.random()*540)+"deg)";
+
+  dice2.style.transform =
+    "rotateX("+(540+Math.random()*540)+"deg) rotateY("+(540+Math.random()*540)+"deg)";
 
   setTimeout(function(){
     dice1.style.transition = "transform 0.5s";
@@ -200,33 +223,38 @@ function roll(){
     dice2.style.transform = map[d2];
 
     setTimeout(function(){
+
       let display1 = (d1===2)?5:(d1===5)?2:d1;
       let display2 = (d2===2)?5:(d2===5)?2:d2;
+
       let total = display1 + display2;
 
       cumulativeTotal += total;
 
-      // ★ 保存
-      localStorage.setItem("totalPoint", cumulativeTotal);
+      // 🔥 保存
+      localStorage.setItem("total", cumulativeTotal);
 
       document.getElementById("result").innerHTML =
         "今回の結果：" + total + "<br>" +
         "<div class='fortune-box'>" + fortune[total] + "</div>";
 
-      document.getElementById("cumulative").textContent = "累計point：" + cumulativeTotal;
+      document.getElementById("cumulative").textContent =
+        "累計point：" + cumulativeTotal;
 
     }, 1000);
+
   }, dice2Time);
 }
 
 function clearTotal(){
   cumulativeTotal = 0;
 
-  // ★ 保存もリセット
-  localStorage.setItem("totalPoint", 0);
+  // 🔥 保存（リセット）
+  localStorage.setItem("total", 0);
 
   document.getElementById("cumulative").textContent = "累計point：0";
 }
+
 </script>
 
 </body>
