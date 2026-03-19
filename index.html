@@ -78,7 +78,6 @@ button{
   font-size:80%;
 }
 
-/* 運勢の枠 */
 .fortune-box {
   border: 3px solid #333;
   border-radius: 12px;
@@ -118,7 +117,6 @@ button{
 
 <h1>🎲 今日の運勢 🎲</h1>
 
-<!-- サイコロと結果をまとめる -->
 <div>
   <div class="scene">
     <div class="dice" id="dice1">
@@ -132,11 +130,9 @@ button{
     <div class="dice" id="dice2"></div>
   </div>
 
-  <!-- サイコロの下に結果表示 -->
   <div id="result"></div>
 </div>
 
-<!-- 累計合計とクリアボタン -->
 <div id="cumulative-container">
   <div id="cumulative">累計point：0</div>
   <button onclick="clearTotal()">クリア</button>
@@ -149,7 +145,13 @@ button{
 <script>
 document.getElementById("dice2").innerHTML = document.getElementById("dice1").innerHTML;
 
-let cumulativeTotal = 0;
+// ★ 保存された値を読み込み
+let cumulativeTotal = localStorage.getItem("totalPoint")
+  ? parseInt(localStorage.getItem("totalPoint"))
+  : 0;
+
+// ★ 画面に反映
+document.getElementById("cumulative").textContent = "累計point：" + cumulativeTotal;
 
 const fortune = {
   2: "😐😐😐😐😐\n<span class='small'>最低の運勢だよ…気をつけてね</span>",
@@ -205,7 +207,9 @@ function roll(){
 
       cumulativeTotal += total;
 
-      // 「今回の結果」を運勢の上に表示
+      // ★ 保存
+      localStorage.setItem("totalPoint", cumulativeTotal);
+
       document.getElementById("result").innerHTML =
         "今回の結果：" + total + "<br>" +
         "<div class='fortune-box'>" + fortune[total] + "</div>";
@@ -218,6 +222,10 @@ function roll(){
 
 function clearTotal(){
   cumulativeTotal = 0;
+
+  // ★ 保存もリセット
+  localStorage.setItem("totalPoint", 0);
+
   document.getElementById("cumulative").textContent = "累計point：0";
 }
 </script>
