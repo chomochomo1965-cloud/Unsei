@@ -13,11 +13,7 @@ body{
   margin:0;
   padding-bottom:160px;
 }
-
-h1{
-  font-size:32px;
-  margin-top:30px;
-}
+h1{ font-size:32px; margin-top:30px; }
 
 .scene{
   display:flex;
@@ -66,37 +62,24 @@ h1{
 button{
   font-size:24px;
   padding:12px 20px;
-  cursor:pointer;
   border-radius:12px;
-  background:#fff;
   border:3px solid #333;
+  background:#fff;
 }
 
 #result{
   font-size:26px;
   margin-top:20px;
   font-weight:bold;
-  white-space: pre-line;
 }
 
-#result .small{
-  font-size:80%;
-}
-
-.fortune-box {
-  border: 3px solid #333;
-  border-radius: 12px;
-  background: #fff8dc;
-  display: inline-block;
-  padding: 15px 25px;
-  font-size: 26px;
-  margin-top: 10px;
-}
-
-#cumulative{
-  font-size:24px;
-  font-weight:bold;
-  margin-top:20px;
+.fortune-box{
+  border:3px solid #333;
+  border-radius:12px;
+  background:#fff8dc;
+  padding:15px 25px;
+  display:inline-block;
+  margin-top:10px;
 }
 </style>
 </head>
@@ -106,69 +89,82 @@ button{
 <h1>🎲 今日の運勢 🎲</h1>
 
 <div class="scene">
-  <div class="dice" id="dice1"></div>
-  <div class="dice" id="dice2"></div>
+
+<div class="dice" id="dice1">
+  <div class="face front"><div></div><div></div><div></div><div></div><div class="dot red"></div><div></div><div></div><div></div><div></div></div>
+  <div class="face back"><div class="dot"></div><div></div><div class="dot"></div><div class="dot"></div><div></div><div class="dot"></div><div class="dot"></div><div></div><div class="dot"></div></div>
+  <div class="face right"><div></div><div></div><div class="dot"></div><div></div><div class="dot red"></div><div></div><div class="dot"></div><div></div><div></div></div>
+  <div class="face left"><div class="dot"></div><div></div><div class="dot"></div><div></div><div></div><div></div><div class="dot"></div><div></div><div class="dot"></div></div>
+  <div class="face top"><div class="dot"></div><div></div><div class="dot"></div><div></div><div class="dot red"></div><div></div><div class="dot"></div><div></div><div class="dot"></div></div>
+  <div class="face bottom"><div></div><div></div><div class="dot"></div><div></div><div></div><div></div><div class="dot"></div><div></div><div></div></div>
+</div>
+
+<div class="dice" id="dice2"></div>
+
 </div>
 
 <div id="result"></div>
 
 <div id="cumulative">累計point：0</div>
 <button onclick="clearTotal()">クリア</button>
-
 <br><br>
 <button onclick="roll()">サイコロをふる</button>
 
 <script>
 
+// コピー
+document.getElementById("dice2").innerHTML =
+document.getElementById("dice1").innerHTML;
+
 // 累計
 let cumulativeTotal = localStorage.getItem("total")
-  ? parseInt(localStorage.getItem("total"))
-  : 0;
+? parseInt(localStorage.getItem("total"))
+: 0;
 
 document.getElementById("cumulative").textContent =
-  "累計point：" + cumulativeTotal;
+"累計point：" + cumulativeTotal;
 
-// ★ fortune（あなたのそのまま）
+// fortune
 const fortune = {
-  2:["😱😱😱😱😱\n<span class='small'>今日は布団から出ない方が安全かも…</span>","💀💀💀💀💀\n<span class='small'>Wi-Fiがやたら遅い日</span>","😵😵😵😵😵\n<span class='small'>何か忘れてる気がする日</span>","🌀🌀🌀🌀🌀\n<span class='small'>なぜか全部かみ合わない…</span>","🥶🥶🥶🥶🥶\n<span class='small'>冷蔵庫より寒い気分の日</span>"],
-  3:["😅😅😅😐😐\n<span class='small'>靴下が片方なくなる予感</span>","😐😐😐😐😐\n<span class='small'>信号によく止まる日</span>","🙄🙄🙄🙄🙄\n<span class='small'>ちょっとしたミス多発</span>","😑😑😑😑😑\n<span class='small'>微妙にタイミングがズレる</span>","🤔🤔🤔🤔🤔\n<span class='small'>なんかモヤっとする日</span>"],
-  4:["🙂🙂🙂😐😐","🙂🙂🙂🙂😐","😊😊😊😐😐","😌😌😌😐😐","🙂🙂🙂🙂🙂"],
-  5:["😄😄😄😐😐","😄😄😄😄😐","😊😊😊😊😐","😆😆😆😐😐","🙂🙂🙂🙂🙂"],
-  6:["😄😄😄😄😐","😋😋😋😋😐","😎😎😎😐😐","😊😊😊😊😊","😄😄😄😄😄"],
-  7:["😃😃😃😃😃","✨✨✨✨✨","😆😆😆😆😆","😎😎😎😎😎","🎉🎉🎉🎉🎉"],
-  8:["😃😃😃😃😃","😊😊😊😊😊","✨✨✨✨✨","😆😆😆😆😆","🎯🎯🎯🎯🎯"],
-  9:["🤩🤩🤩🤩🤩","🔥🔥🔥🔥🔥","✨✨✨✨✨","😎😎😎😎😎","🎉🎉🎉🎉🎉"],
-  10:["🤩🤩🤩🤩🤩","🔥🔥🔥🔥🔥","✨✨✨✨✨","😎😎😎😎😎","🎯🎯🎯🎯🎯"],
-  11:["🔥🔥🔥🔥🔥","👑👑👑👑👑","✨✨✨✨✨","🎉🎉🎉🎉🎉","😎😎😎😎😎"],
-  12:["👑👑👑👑👑👑","🌈🌈🌈🌈🌈","🔥🔥🔥🔥🔥🔥","🎊🎊🎊🎊🎊","✨✨✨✨✨✨"]
+  2:["😱最悪","💀不運","😵注意","🌀空回り","🥶低調"],
+  3:["😅微妙","😐普通","🙄ミス注意","😑ズレ","🤔迷う"],
+  4:["🙂平和","😊まあまあ","😌安定","🙂普通","🙂OK"],
+  5:["😄良い","😊いい感じ","😆上昇","🙂安定","😄順調"],
+  6:["😄好調","😋満足","😎良い","😊軽快","😄快調"],
+  7:["😃ラッキー","✨ツイてる","😆楽しい","😎流れ良し","🎉当たり"],
+  8:["😃吉","😊良い出会い","✨好調","😆楽しい","🎯成功"],
+  9:["🤩最高","🔥勢い","✨流れ良","😎自信","🎉楽しい"],
+  10:["🤩無敵","🔥絶好調","✨成功","😎OK","🎯決まる"],
+  11:["🔥神","👑主役","✨最強","🎉最高","😎完璧"],
+  12:["👑伝説","🌈奇跡","🔥最強","🎊神回","✨完璧"]
 };
 
 function roll(){
 
-  let d1 = Math.floor(Math.random()*6)+1;
-  let d2 = Math.floor(Math.random()*6)+1;
+let d1 = Math.floor(Math.random()*6)+1;
+let d2 = Math.floor(Math.random()*6)+1;
 
-  let total = d1 + d2;
+let total = d1 + d2;
 
-  cumulativeTotal += total;
-  localStorage.setItem("total", cumulativeTotal);
+cumulativeTotal += total;
+localStorage.setItem("total", cumulativeTotal);
 
-  // ★★★★★ ここが最重要（ランダム1つ）
-  let list = fortune[total];
-  let randomFortune = list[Math.floor(Math.random() * list.length)];
+// ★ランダム1つ
+let list = fortune[total];
+let randomFortune = list[Math.floor(Math.random()*list.length)];
 
-  document.getElementById("result").innerHTML =
-    "今回の結果：" + total + "<br>" +
-    "<div class='fortune-box'>" + randomFortune + "</div>";
+document.getElementById("result").innerHTML =
+"今回の結果：" + total + "<br>" +
+"<div class='fortune-box'>" + randomFortune + "</div>";
 
-  document.getElementById("cumulative").textContent =
-    "累計point：" + cumulativeTotal;
+document.getElementById("cumulative").textContent =
+"累計point：" + cumulativeTotal;
 }
 
 function clearTotal(){
-  cumulativeTotal = 0;
-  localStorage.setItem("total", 0);
-  document.getElementById("cumulative").textContent = "累計point：0";
+cumulativeTotal = 0;
+localStorage.setItem("total", 0);
+document.getElementById("cumulative").textContent = "累計point：0";
 }
 
 </script>
